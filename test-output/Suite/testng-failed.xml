@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <parameter name="NombreNavegador" value="CHROME"/>
+  <parameter name="Url" value="https://www.google.com"/>
+  <test thread-count="5" name="Test(failed)">
+    <classes>
+      <class name="com.selenium.test.googleTest">
+        <methods>
+          <include name="Postcondicion"/>
+          <include name="Precondicion"/>
+          <include name="ValidarGoogleSearch" invocation-numbers="2"/>
+        </methods>
+      </class> <!-- com.selenium.test.googleTest -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->
