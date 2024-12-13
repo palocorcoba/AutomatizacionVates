@@ -11,62 +11,57 @@ import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public class DriverFactory {
-	private enum browsers {
-		EDGE, FIREFOX, CHROME
-	}
+public class DriverFactory { private enum browsers {
+    EDGE, FIREFOX, CHROME
+}
 
-	public static WebDriver LevantarBrowser(WebDriver driver, String URL, String browserName) {
+public static WebDriver LevantarBrowser(WebDriver driver, String URL, String browserName) {
+    if (browserName == null || browserName.trim().isEmpty()) {
+        Reporter.log("El par·metro 'browserName' es nulo o vacÌo. Se utilizar· el navegador por defecto: CHROME");
+        browserName = "CHROME";
+    }
 
-//		String browserName = context.getCurrentXmlTest().getParameter("NombreNavegador");
-//		String URL = context.getCurrentXmlTest().getParameter("Url");
+    try {
+        switch (browsers.valueOf(browserName.toUpperCase())) {
+            case CHROME: 
+                System.setProperty("webdriver.chrome.driver", "src\\resources\\chromedriver-win64\\chromedriver.exe");
+                Reporter.log("Abriendo navegador Chrome");
+                driver = new ChromeDriver();
+                break;
 
-		switch (browsers.valueOf(browserName)) {
-		case CHROME: // Using WebDriver
-		{
-			System.setProperty("webdriver.chrome.driver", "src\\resources\\chromedriver.exe");
-			Reporter.log("Abro browser", true);
-			driver = new ChromeDriver();
-			break;
-		}
-		case FIREFOX:// Using WebDriver
-		{
-			System.setProperty("webdriver.gecko.driver", "src\\resources\\geckodriver.exe");
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
+            case FIREFOX: 
+                System.setProperty("webdriver.gecko.driver", "src\\resources\\mozilla\\geckodriver.exe");
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+                firefoxOptions.setBinary("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+                Reporter.log("Abriendo navegador Firefox");
+                driver = new FirefoxDriver(firefoxOptions);
+                break;
 
-            // Especificar la ubicaci√≥n del binario de Firefox si no est√° en el PATH
-            firefoxOptions.setBinary("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+            case EDGE:
+                System.setProperty("webdriver.edge.driver", "src\\resources\\edge\\msedgedriver.exe");
+                Reporter.log("Abriendo navegador Edge");
+                driver = new EdgeDriver();
+                break;
 
-            Reporter.log("Abriendo navegador Firefox");
-            driver = new FirefoxDriver(firefoxOptions);
-            break;
-		}
-		case EDGE:// Using WebDriver
-		{
-			System.setProperty("webdriver.edge.driver", "src/resources/msedgedriver.exe");
-			driver = new EdgeDriver();
-			Reporter.log("Abro browser", true);
-			break;
-		}
+            default:
+                throw new IllegalArgumentException("El navegador especificado no est· soportado: " + browserName);
+        }
+    } catch (IllegalArgumentException e) {
+        Reporter.log("El navegador especificado no es v·lido. Se usar· Chrome por defecto.");
+        System.setProperty("webdriver.chrome.driver", "src\\resources\\chromedriver-win64\\chromedriver.exe");
+        driver = new ChromeDriver();
+    }
 
-		default:
-			Reporter.log("No selecciono ningun browser correcto, se le asignara Chrome", true);
-			System.setProperty("webdriver.chrome.driver", "src/resources/msedgedriver.exe");
-			Reporter.log("Abro browser", true);
-			driver = new ChromeDriver();
-			break;
+    driver.manage().window().maximize();
+    driver.get(URL);
+    return driver;
+}
 
-		}
-		driver.manage().window().maximize();
-		driver.get(URL);
-		return driver;
-
-	}
-
-	public static void FinalizarBrowser(WebDriver driver) {
-		Reporter.log("Cerrando el browser", true);
-		driver.quit();
-		driver = null;
-	}
+public static void FinalizarBrowser(WebDriver driver) {
+    if (driver != null) {
+        Reporter.log("Cerrando el navegador");
+        driver.quit();
+    }
+}
 
 }

@@ -38,7 +38,16 @@ public class wikiTest2 {
 	        {"Selenium"}
 	    };
 	}
-
+	
+	 //DataProvider Agustina
+    @DataProvider(name = "dataProvider2")
+    public Object[][] createData2() {
+        return new Object[][] {
+            {"Python"},
+            {"Java"}
+        };
+    }
+/*
 	@Test(dataProvider = "datos", description = "Validar que las busquedas en Wikipedia funcionan")
 	public void ValidarWikipedia2(String dato) throws Exception {
 		Reporter.log("Caso de prueba", true);
@@ -59,7 +68,7 @@ public class wikiTest2 {
 	 Fecha: 13/12/24
 	 Hora: 8:48
 	 **/
-	@Test(description = "Validar que las busquedas en Wikipedia funcionan")
+	/*@Test(description = "Validar que las busquedas en Wikipedia funcionan")
 	public void ValidarBusquedaWikipedia() throws Exception {
 
 		Reporter.log("Pï¿½gina de Wikipedia cargada", true);
@@ -99,6 +108,26 @@ public class wikiTest2 {
 
 		Assert.assertTrue((resultadoPage.getTitulo(dato).contains(dato)), "no se encontro " + dato);
 	}
+	*/
 	
+	//Agustina 
+	//13/12/2024 10:36
+	
+    @Test(dataProvider = "dataProvider2", description = "Validar que las búsquedas en Wikipedia funcionan correctamente")
+    public void validarBusquedaWikipediaAgustina(String dato) throws Exception {
+        Reporter.log("Iniciando prueba de búsqueda en Wikipedia Agustina", true);
+        Reporter.log("Localizando la caja de búsqueda en la página principal de Wikipedia", true);
+
+        
+        
+        WikiHomePage homepage = PageFactory.initElements(driver, WikiHomePage.class);
+        Reporter.log("Verificando que la caja de búsqueda esté visible", true);
+        Assert.assertTrue(homepage.SeVisualizaCaja(), "No se visualizó la caja de búsqueda");
+        Reporter.log("Ingresando el texto: " + dato, true);
+        homepage.IngresarDatoCajaBusqueda(dato);
+
+        WikiResultPage resultadoPage = PageFactory.initElements(driver, WikiResultPage.class);
+        Assert.assertTrue(resultadoPage.getTitulo(dato).contains(dato), "No se encontró el término: " + dato);
+    }
 	
 }
