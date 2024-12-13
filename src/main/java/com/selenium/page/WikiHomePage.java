@@ -29,7 +29,6 @@ public class WikiHomePage {
 	
 	public void ClickEnEspaniol() throws Exception {
 		idiomaEspaniol.click();
-
 	}
 	
 	public String getCaja() {
@@ -42,15 +41,31 @@ public class WikiHomePage {
 	}
 
 	
-	
-	public void IngresarDatoCajaBusqueda ( String dato)
-	{
-		Reporter.log("Localizar y comprobar que la caja de busqueda se muestra", true);
-		Assert.assertTrue((caja.isDisplayed()), "La caja de busqueda no se visualiza");
-		Reporter.log("Ingresar la palabra " + dato, true);
-		caja.sendKeys(dato);
-		Reporter.log("Presionar Enter", true);
-		caja.sendKeys(Keys.ENTER);
-	}
-	
+	/**Francisco 
+	Fecha: 13/12/24
+	Hora: 10:40
+	Motivo: Modifico metodo IngresarDatoCajaBusqueda para darle mas robustez
+	**/
+	public void IngresarDatoCajaBusqueda(String dato) {
+	    try {
+	        Reporter.log("Comprobando que la caja de búsqueda esté visible...");
+	        if (!caja.isDisplayed()) {
+	            throw new AssertionError("La caja de búsqueda no está visible.");
+	        }
+	        Reporter.log("Caja de búsqueda visible. Procediendo a interactuar con ella.");
+
+	        Reporter.log("Limpiando el contenido previo de la caja de búsqueda...");
+	        caja.clear();
+
+	        Reporter.log("Ingresando el dato: " + dato);
+	        caja.sendKeys(dato);
+
+	        Reporter.log("Presionando la tecla ENTER para buscar...");
+	        caja.sendKeys(Keys.ENTER);
+
+	    } catch (Exception e) {
+	        Reporter.log("Error al intentar interactuar con la caja de búsqueda: " + e.getMessage());
+	        throw new RuntimeException("Error al ingresar el dato en la caja de búsqueda", e);
+	    }
+	}	
 }
