@@ -34,20 +34,19 @@ public class wikiTest2 {
 	@DataProvider(name = "datos")
 	public Object[][] createData() {
 	    return new Object[][] {
-	        {"Messi"}
+	        {"Messi"},
+	        {"Selenium"}
 	    };
 	}
 
-	@Test(description = "Validar que las busquedas en Wikipedia funcionan")
-	public void ValidarWikipedia2() throws Exception {
-		Reporter.log("Caso de prueba Fanny Montoya y Mariana", true);
+	@Test(dataProvider = "datos", description = "Validar que las busquedas en Wikipedia funcionan")
+	public void ValidarWikipedia2(String dato) throws Exception {
+		Reporter.log("Caso de prueba", true);
 		Reporter.log("Localizar la caja de busqueda del home de wiki", true);
 		WikiHomePage homepage = PageFactory.initElements(driver, WikiHomePage.class);
 
 		Reporter.log("Verificar que la caja de busqueda se este mostrando", true);
 		Assert.assertTrue((homepage.SeVisualizaCaja()), "No se visualizo la caja");
-
-		String dato = "Messi";
 
 		Reporter.log("Ingresar el texto " + dato, true);
 		homepage.IngresarDatoCajaBusqueda(dato);
@@ -63,30 +62,30 @@ public class wikiTest2 {
 	@Test(description = "Validar que las busquedas en Wikipedia funcionan")
 	public void ValidarBusquedaWikipedia() throws Exception {
 
-		Reporter.log("Página de Wikipedia cargada", true);
+		Reporter.log("Pï¿½gina de Wikipedia cargada", true);
 		WebElement searchInput = driver.findElement(By.id("searchInput"));
 		Assert.assertTrue(searchInput.isDisplayed());
-		Reporter.log("Campo de búsqueda encontrado", true);
+		Reporter.log("Campo de bï¿½squeda encontrado", true);
 		searchInput.sendKeys("Selenium");
-		Reporter.log("Texto 'Selenium' ingresado en el campo de búsqueda", true);
+		Reporter.log("Texto 'Selenium' ingresado en el campo de bï¿½squeda", true);
 
 		searchInput.submit();
-		Reporter.log("Formulario de búsqueda enviado", true);
+		Reporter.log("Formulario de bï¿½squeda enviado", true);
 		
 		Thread.sleep(5000);
 		WebElement tituloResultado = driver.findElement(By.id("firstHeading"));
-		Reporter.log("Texto encontrado en la página: " + tituloResultado.getText(), true);
+		Reporter.log("Texto encontrado en la pï¿½gina: " + tituloResultado.getText(), true);
 
 		System.out.println("Texto encontrado " + tituloResultado.getText());
 		Assert.assertTrue(tituloResultado.isDisplayed());
-		Reporter.log("Título del resultado de búsqueda es visible", true);
+		Reporter.log("Tï¿½tulo del resultado de bï¿½squeda es visible", true);
 		Reporter.log("Prueba en Chrome finalizada", true);
 		driver.close();
 	}
 
 	@Test(dataProvider = "datos", description = "Validar que las busquedas en Wikipedia funcionan")
 	public void ValidarWikipediaRamiro(String dato) throws Exception {
-		Reporter.log("Caso de prueba Fanny Montoya y Mariana", true);
+		Reporter.log("Caso de prueba Fanny Montoya", true);
 		Reporter.log("Localizar la caja de busqueda del home de wiki", true);
 		WikiHomePage homepage = PageFactory.initElements(driver, WikiHomePage.class);
 
@@ -100,4 +99,6 @@ public class wikiTest2 {
 
 		Assert.assertTrue((resultadoPage.getTitulo(dato).contains(dato)), "no se encontro " + dato);
 	}
+	
+	
 }
