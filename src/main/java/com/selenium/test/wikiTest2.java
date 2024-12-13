@@ -38,16 +38,20 @@ public class wikiTest2 {
 	        {"Selenium"}
 	    };
 	}
-	
-	@DataProvider(name = "dataProvider2")
+	/**Joel
+	 Fecha: 13/12/24
+	 Hora: 11:03
+	 **/
+	@DataProvider(name = "datos2")
     public Object[][] createData2() {
         return new Object[][] {
             {"Python"},
-            {"Java"}
+            {"Messi"},
+				{"Club AtlÃ©tico Talleres"}
         };
     }
 
-	@Test(dataProvider = "datos", description = "Validar que las busquedas en Wikipedia funcionan")
+	@Test(dataProvider = "datos2", description = "Validar que las busquedas en Wikipedia funcionan")
 	public void ValidarWikipedia2(String dato) throws Exception {
 		Reporter.log("Caso de prueba", true);
 		Reporter.log("Localizar la caja de busqueda del home de wiki", true);
@@ -109,21 +113,21 @@ public class wikiTest2 {
 	}
 	
 	
-	 @Test(dataProvider = "dataProvider2", description = "Validar que las búsquedas en Wikipedia funcionan correctamente")
+	 @Test(dataProvider = "datos2", description = "Validar que las bï¿½squedas en Wikipedia funcionan correctamente")
 	    public void validarBusquedaWikipediaAgustina(String dato) throws Exception {
-	        Reporter.log("Iniciando prueba de búsqueda en Wikipedia Agustina", true);
-	        Reporter.log("Localizando la caja de búsqueda en la página principal de Wikipedia", true);
+	        Reporter.log("Iniciando prueba de bï¿½squeda en Wikipedia Agustina", true);
+	        Reporter.log("Localizando la caja de bï¿½squeda en la pï¿½gina principal de Wikipedia", true);
 
 	        
 	        
 	        WikiHomePage homepage = PageFactory.initElements(driver, WikiHomePage.class);
-	        Reporter.log("Verificando que la caja de búsqueda esté visible", true);
-	        Assert.assertTrue(homepage.SeVisualizaCaja(), "No se visualizó la caja de búsqueda");
+	        Reporter.log("Verificando que la caja de bï¿½squeda estï¿½ visible", true);
+	        Assert.assertTrue(homepage.SeVisualizaCaja(), "No se visualizï¿½ la caja de bï¿½squeda");
 	        Reporter.log("Ingresando el texto: " + dato, true);
 	        homepage.IngresarDatoCajaBusqueda(dato);
 
 	        WikiResultPage resultadoPage = PageFactory.initElements(driver, WikiResultPage.class);
-	        Assert.assertTrue(resultadoPage.getTitulo(dato).contains(dato), "No se encontró el término: " + dato);
+	        Assert.assertTrue(resultadoPage.getTitulo(dato).contains(dato), "No se encontrï¿½ el tï¿½rmino: " + dato);
 	    }
 	
 
