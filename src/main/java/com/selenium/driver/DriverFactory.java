@@ -17,20 +17,20 @@ public class DriverFactory { private enum browsers {
 
 public static WebDriver LevantarBrowser(WebDriver driver, String URL, String browserName) {
     if (browserName == null || browserName.trim().isEmpty()) {
-        Reporter.log("El parámetro 'browserName' es nulo o vacío. Se utilizará el navegador por defecto: CHROME");
+        Reporter.log("El parï¿½metro 'browserName' es nulo o vacï¿½o. Se utilizarï¿½ el navegador por defecto: CHROME");
         browserName = "CHROME";
     }
 
     try {
         switch (browsers.valueOf(browserName.toUpperCase())) {
             case CHROME: 
-                System.setProperty("webdriver.chrome.driver", "src\\resources\\chromedriver-win64\\chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "src\\Resources\\chromedriver.exe");
                 Reporter.log("Abriendo navegador Chrome");
                 driver = new ChromeDriver();
                 break;
 
             case FIREFOX: 
-                System.setProperty("webdriver.gecko.driver", "src\\resources\\mozilla\\geckodriver.exe");
+                System.setProperty("webdriver.gecko.driver", "src\\Resources\\geckodriver.exe");
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.setBinary("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
                 Reporter.log("Abriendo navegador Firefox");
@@ -38,17 +38,17 @@ public static WebDriver LevantarBrowser(WebDriver driver, String URL, String bro
                 break;
 
             case EDGE:
-                System.setProperty("webdriver.edge.driver", "src\\resources\\edge\\msedgedriver.exe");
+                System.setProperty("webdriver.edge.driver", "src\\Resources\\msedgedriver.exe");
                 Reporter.log("Abriendo navegador Edge");
                 driver = new EdgeDriver();
                 break;
 
             default:
-                throw new IllegalArgumentException("El navegador especificado no está soportado: " + browserName);
+                throw new IllegalArgumentException("El navegador especificado no estï¿½ soportado: " + browserName);
         }
     } catch (IllegalArgumentException e) {
-        Reporter.log("El navegador especificado no es válido. Se usará Chrome por defecto.");
-        System.setProperty("webdriver.chrome.driver", "src\\resources\\chromedriver-win64\\chromedriver.exe");
+        Reporter.log("El navegador especificado no es vï¿½lido. Se usarï¿½ Chrome por defecto.");
+        System.setProperty("webdriver.chrome.driver", "src\\Resources\\chromedriver.exe");
         driver = new ChromeDriver();
     }
 
