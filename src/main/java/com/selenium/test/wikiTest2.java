@@ -38,8 +38,20 @@ public class wikiTest2 {
 	        {"Selenium"}
 	    };
 	}
+	/**Joel
+	 Fecha: 13/12/24
+	 Hora: 11:03
+	 **/
+	@DataProvider(name = "datos2")
+    public Object[][] createData2() {
+        return new Object[][] {
+            {"Python"},
+            {"Messi"},
+				{"Club Atlético Talleres"}
+        };
+    }
 
-	@Test(dataProvider = "datos", description = "Validar que las busquedas en Wikipedia funcionan")
+	@Test(dataProvider = "datos2", description = "Validar que las busquedas en Wikipedia funcionan")
 	public void ValidarWikipedia2(String dato) throws Exception {
 		Reporter.log("Caso de prueba", true);
 		Reporter.log("Localizar la caja de busqueda del home de wiki", true);
@@ -100,5 +112,24 @@ public class wikiTest2 {
 		Assert.assertTrue((resultadoPage.getTitulo(dato).contains(dato)), "no se encontro " + dato);
 	}
 	
+	
+	 @Test(dataProvider = "datos2", description = "Validar que las b�squedas en Wikipedia funcionan correctamente")
+	    public void validarBusquedaWikipediaAgustina(String dato) throws Exception {
+	        Reporter.log("Iniciando prueba de b�squeda en Wikipedia Agustina", true);
+	        Reporter.log("Localizando la caja de b�squeda en la p�gina principal de Wikipedia", true);
+
+	        
+	        
+	        WikiHomePage homepage = PageFactory.initElements(driver, WikiHomePage.class);
+	        Reporter.log("Verificando que la caja de b�squeda est� visible", true);
+	        Assert.assertTrue(homepage.SeVisualizaCaja(), "No se visualiz� la caja de b�squeda");
+	        Reporter.log("Ingresando el texto: " + dato, true);
+	        homepage.IngresarDatoCajaBusqueda(dato);
+
+	        WikiResultPage resultadoPage = PageFactory.initElements(driver, WikiResultPage.class);
+	        Assert.assertTrue(resultadoPage.getTitulo(dato).contains(dato), "No se encontr� el t�rmino: " + dato);
+	    }
+	
+
 	
 }

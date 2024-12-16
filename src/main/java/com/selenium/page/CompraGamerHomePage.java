@@ -49,18 +49,18 @@ public class CompraGamerHomePage {
 	private WebElement inputNumTelefono;
 
 	@FindBy(xpath = "//input[@id='mat-input-7']")
-	private WebElement inputContraseña;
+	private WebElement inputContrasenia;
 
 	@FindBy(xpath = "//input[@id='mat-input-8']")
-	private WebElement inputRepContraseña;
+	private WebElement inputRepContrasenia;
 
 	@FindBy(xpath = "//span[normalize-space()='Registrarme']")
 	private WebElement RegistrarmeButton;
 	
-	@FindBy(xpath = "//p[contains(text(),'Tu cuenta se ha creado con éxito. Por favor iniciá')]")
+	@FindBy(xpath = "//p[contains(text(),'Tu cuenta se ha creado con ï¿½xito. Por favor iniciï¿½')]")
 	private WebElement mensajeExito;
 	
-	// Métodos para esperas dinámicas
+	// Mï¿½todos para esperas dinï¿½micas
 	private void waitForElementToBeVisible(WebElement element, int timeoutInSeconds) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
 		wait.until(ExpectedConditions.visibilityOf(element));
@@ -71,7 +71,7 @@ public class CompraGamerHomePage {
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
-	// Métodos para interactuar con los elementos
+	// Mï¿½todos para interactuar con los elementos
 	public boolean isIconPersonaVisible() {
 		Reporter.log("Validar que el icono Persona Ingresar se visualiza", true);
 		return personaIconIngresar.isDisplayed();
@@ -79,23 +79,23 @@ public class CompraGamerHomePage {
 
 	public void clickPersonaIcon() {
 		Reporter.log("Localizar y comprobar que el icono Persona Ingresar se muestra", true);
-		Assert.assertTrue(isIconPersonaVisible(), "La caja de búsqueda no está visible");
-		waitForElementToBeVisible(personaIconIngresar, 10); // Espera dinámica de 10 segundos
-		Reporter.log("Hacemos click en el ícono", true);
+		Assert.assertTrue(isIconPersonaVisible(), "La caja de bï¿½squeda no estï¿½ visible");
+		waitForElementToBeVisible(personaIconIngresar, 10); // Espera dinï¿½mica de 10 segundos
+		Reporter.log("Hacemos click en el ï¿½cono", true);
 		personaIconIngresar.click();
 		;
 	}
 
 	public void clickCrearCuentaButton() {
-		Reporter.log("Validar que el botón 'Crear cuenta' esté visible y hacer clic en él", true);
-		Assert.assertTrue(crearCuentaButton.isDisplayed(), "El botón 'Crear cuenta' no está visible");
+		Reporter.log("Validar que el botï¿½n 'Crear cuenta' estï¿½ visible y hacer clic en ï¿½l", true);
+		Assert.assertTrue(crearCuentaButton.isDisplayed(), "El botï¿½n 'Crear cuenta' no estï¿½ visible");
 		waitForElementToBeClickable(crearCuentaButton, 10);
 		crearCuentaButton.click();
-		Reporter.log("Se hizo clic en el botón 'Crear cuenta'", true);
+		Reporter.log("Se hizo clic en el botï¿½n 'Crear cuenta'", true);
 	}
 
 	public void registrarCuenta(String nombre, String apellido, String email, String codArea, String numTelefono,
-			String contraseña, String repContraseña) {
+			String contrasenia, String repContrasenia) {
 		Reporter.log("Ingresando datos para el registro", true);
 
 		Reporter.log("Ingresar nombre: " + nombre, true);
@@ -110,47 +110,47 @@ public class CompraGamerHomePage {
 		email = Utiles.getFechaActual() + email;
 		inputEmail.sendKeys(email);
 
-		Reporter.log("Ingresar código de área: " + codArea, true);
+		Reporter.log("Ingresar cï¿½digo de ï¿½rea: " + codArea, true);
 		inputCodArea.sendKeys(codArea);
 
-		Reporter.log("Ingresar número de teléfono: " + numTelefono, true);
+		Reporter.log("Ingresar nï¿½mero de telï¿½fono: " + numTelefono, true);
 		inputNumTelefono.sendKeys(numTelefono);
 
-		Reporter.log("Ingresar contraseña: " + contraseña, true);
-		inputContraseña.sendKeys(contraseña);
+		Reporter.log("Ingresar contraseï¿½a: " + contrasenia, true);
+		inputContrasenia.sendKeys(contrasenia);
 
-		Reporter.log("Reingresar contraseña: " + contraseña, true);
-		inputRepContraseña.sendKeys(contraseña);
+		Reporter.log("Reingresar contraseï¿½a: " + contrasenia, true);
+		inputRepContrasenia.sendKeys(contrasenia);
 
 		Reporter.log("Todos los datos han sido ingresados correctamente", true);
 	}
 
 	public void clickRegistrarmeButton() {
-		Reporter.log("Validar que el botón 'Registrarme' esté visible", true);
-		Assert.assertTrue(RegistrarmeButton.isDisplayed(), "El botón 'Registrarme' no está visible");
+		Reporter.log("Validar que el botï¿½n 'Registrarme' estï¿½ visible", true);
+		Assert.assertTrue(RegistrarmeButton.isDisplayed(), "El botï¿½n 'Registrarme' no estï¿½ visible");
 
-		Reporter.log("Verificar si el botón 'Registrarme' está habilitado", true);
+		Reporter.log("Verificar si el botï¿½n 'Registrarme' estï¿½ habilitado", true);
 		if (!RegistrarmeButton.isEnabled()) {
-			Reporter.log("El botón 'Registrarme' no está habilitado. Verificar campos de entrada.", true);
-			throw new IllegalStateException("El botón 'Registrarme' no está habilitado. Revisa las validaciones.");
+			Reporter.log("El botï¿½n 'Registrarme' no estï¿½ habilitado. Verificar campos de entrada.", true);
+			throw new IllegalStateException("El botï¿½n 'Registrarme' no estï¿½ habilitado. Revisa las validaciones.");
 		}
 
-		Reporter.log("Esperar que el botón 'Registrarme' sea clickeable", true);
+		Reporter.log("Esperar que el botï¿½n 'Registrarme' sea clickeable", true);
 		waitForElementToBeClickable(RegistrarmeButton, 10);
 
 		RegistrarmeButton.click();
-		Reporter.log("Se hizo clic en el botón 'Registrarme'", true);
+		Reporter.log("Se hizo clic en el botï¿½n 'Registrarme'", true);
 	}
 	
 	public boolean verificarMensajeExito(int timeoutInSeconds) {
-	    Reporter.log("Esperar a que el mensaje de éxito sea visible", true);
+	    Reporter.log("Esperar a que el mensaje de ï¿½xito sea visible", true);
 	    try {
 	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
 	        wait.until(ExpectedConditions.visibilityOf(mensajeExito));
-	        Reporter.log("Mensaje de éxito visible: " + mensajeExito.getText(), true);
+	        Reporter.log("Mensaje de ï¿½xito visible: " + mensajeExito.getText(), true);
 	        return true;
 	    } catch (Exception e) {
-	        Reporter.log("No se encontró el mensaje de éxito", true);
+	        Reporter.log("No se encontrï¿½ el mensaje de ï¿½xito", true);
 	        return false;
 	    }
 	}

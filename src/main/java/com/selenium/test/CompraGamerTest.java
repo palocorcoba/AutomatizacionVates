@@ -39,41 +39,41 @@ public class CompraGamerTest {
 	@DataProvider(name = "datos")
 	public Object[][] createData() {
 		return new Object[][] {
-				{ "Juan3", "Pérez3", "juan3@test.com", "11", "12345678", "Probando1234", "Probando1234" },
-				{ "Ana1", "Gómez1", "ana1.gomez@test.com", "15", "87654321", "Contraseña123", "Contraseña123" },
+				{ "Juan3", "Pï¿½rez3", "juan3@test.com", "11", "12345678", "Probando1234", "Probando1234" },
+				{ "Ana1", "Gï¿½mez1", "ana1.gomez@test.com", "15", "87654321", "Contraseï¿½a123", "Contraseï¿½a123" },
 				{ "Leo1", "Messi1", "leoMessi@test.com", "15", "266434123", "MessiCrack123", "MessiCrack123" }, };
 	}
 
 	@Test(dataProvider = "datos", description = "Validar que el Registrar Usuario por Compra Gamer funcione")
 
 	public void ValidarRegistrarCompraGamer(String nombre, String apellido, String email, String codArea,
-			String numTelefono, String contraseña, String repContraseña) throws Exception {
+			String numTelefono, String contrasenia, String repContrasenia) throws Exception {
 
-		Reporter.log("Cargando la página de CompraGamer", true);
-		// Inicializar la página de inicio
+		Reporter.log("Cargando la pï¿½gina de CompraGamer", true);
+		// Inicializar la pï¿½gina de inicio
 		CompraGamerHomePage homepage = PageFactory.initElements(driver, CompraGamerHomePage.class);
 
-		Reporter.log("Validar que el Ícono Persona Ingresar esté visible", true);
-		Assert.assertTrue(homepage.isIconPersonaVisible(), "El ícono no está visible");
+		Reporter.log("Validar que el ï¿½cono Persona Ingresar estï¿½ visible", true);
+		Assert.assertTrue(homepage.isIconPersonaVisible(), "El ï¿½cono no esta visible");
 
-		// Clickear Ícono Persona Ingresar
+		// Clickear ï¿½cono Persona Ingresar
 		homepage.clickPersonaIcon();
 
-		// Clickear el botón "Crear cuenta"
+		// Clickear el botï¿½n "Crear cuenta"
 		homepage.clickCrearCuentaButton();
 
 		// Registrar una cuenta
 		Reporter.log("Registrando una nueva cuenta", true);
-		homepage.registrarCuenta(nombre, apellido, email, codArea, numTelefono, contraseña, repContraseña);
+		homepage.registrarCuenta(nombre, apellido, email, codArea, numTelefono, contrasenia, repContrasenia);
 
-		// Validar y hacer clic en el botón "Registrarme"
+		// Validar y hacer clic en el botï¿½n "Registrarme"
 		homepage.clickRegistrarmeButton();
 
 		Reporter.log("Registro completado exitosamente", true);
 
-		// Verificar que aparece el mensaje de éxito
+		// Verificar que aparece el mensaje de ï¿½xito
 		boolean mensajeExitoVisible = homepage.verificarMensajeExito(1); // Timeout de 1 segundos
-		Assert.assertTrue(mensajeExitoVisible, "El mensaje de éxito no apareció después del registro.");
-		Reporter.log("El usuario se registró correctamente y el mensaje se mostró.", true);
+		Assert.assertTrue(mensajeExitoVisible, "El mensaje de ï¿½xito no apareciï¿½ despuï¿½s del registro.");
+		Reporter.log("El usuario se registrï¿½ correctamente y el mensaje se mostrï¿½.", true);
 	}
 }
