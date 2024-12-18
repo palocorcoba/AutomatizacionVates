@@ -7,7 +7,7 @@
     <classes>
       <class name="com.selenium.test.CompraGamerTestRami">
       		<methods>
-					<include name="ValidarRegistrarCompraGamer" />
+					<include name="ValidarRegistroInicioSesionYDatosVacios" />
 		</methods>
       </class>
     </classes>

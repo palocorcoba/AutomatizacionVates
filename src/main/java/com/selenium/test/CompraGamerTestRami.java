@@ -9,8 +9,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.selenium.driver.DriverFactory;
+import com.selenium.page.CompraGamerAccountPage;
 import com.selenium.page.CompraGamerHomePageRami;
 
 /**Ramiro 
@@ -41,36 +43,54 @@ public class CompraGamerTestRami {
 	};
 	}
 
-	@Test(dataProvider = "datos", description = "Validar que el Registrar Usuario por Compra Gamer funcione")
+	@Test(dataProvider = "datos", description = "Validar registro, inicio de sesión y redirección a página de Mi Cuenta con datos vacíos")
+	public void ValidarRegistroInicioSesionYDatosVacios(String nombre, String apellido, String email, String codArea,
+	        String numTelefono, String contrasenia, String repContrasenia) throws Exception {
 
-	public void ValidarRegistrarCompraGamer(String nombre, String apellido, String email, String codArea,
-			String numTelefono, String contrasenia, String repContrasenia) throws Exception {
+	    Reporter.log("Cargando la página de Compra Gamer", true);
+	    CompraGamerHomePageRami homepage = PageFactory.initElements(driver, CompraGamerHomePageRami.class);
 
-		Reporter.log("Cargando la pagina de CompraGamer", true);
-		// Inicializar la pagina de inicio
-		CompraGamerHomePageRami homepage = PageFactory.initElements(driver, CompraGamerHomePageRami.class);
+	    // Registro del usuario
+	    homepage.clickPersonaIcon();
+	    homepage.clickCrearCuentaButton();
+	    homepage.registrarCuenta(nombre, apellido, email, codArea, numTelefono, contrasenia, repContrasenia);
+	    homepage.clickRegistrarmeButton();
 
-		Reporter.log("Validar que el ícono Persona Ingresar esta visible", true);
-		Assert.assertTrue(homepage.isIconPersonaVisible(), "El icono no esta visible");
+	    Assert.assertTrue(homepage.verificarMensajeExito(5), "El mensaje de éxito no apareció.");
+	    homepage.clickAceptarButton();
 
-		// Clickear icono Persona Ingresar
-		homepage.clickPersonaIcon();
+	    // Inicio de sesión
+	    homepage.iniciarSesion(email, contrasenia);
 
-		// Clickear el boton "Crear cuenta"
-		homepage.clickCrearCuentaButton();
+	    // Navegación a 'Mi Cuenta'
+	    homepage.clickIconoPersona();
+	    CompraGamerAccountPage accountPage = homepage.clickMiCuenta();
 
-		// Registrar una cuenta
-		Reporter.log("Registrando una nueva cuenta", true);
-		homepage.registrarCuenta(nombre, apellido, email, codArea, numTelefono, contrasenia, repContrasenia);
+	    // Validar que la página de Mi Cuenta se ha cargado
+	    Assert.assertTrue(accountPage.isAccountPageLoaded(), "La página 'Mi Cuenta' no se cargó correctamente.");
 
-		// Validar y hacer clic en el boton "Registrarme"
-		homepage.clickRegistrarmeButton();
+	    // **Uso de softAssert
+	    SoftAssert softAssert = new SoftAssert();
 
-		Reporter.log("Registro completado exitosamente", true);
+	    Reporter.log("Validando los mensajes 'No tenés...' en la página de Mi Cuenta", true);
 
-		// Verificar que aparece el mensaje de exito
-		boolean mensajeExitoVisible = homepage.verificarMensajeExito(2); // Timeout de 2 segundos
-		Assert.assertTrue(mensajeExitoVisible, "El mensaje de exito no aparecio despues del registro.");
-		Reporter.log("El usuario se registro correctamente y el mensaje se mostro", true);
+	    softAssert.assertTrue(accountPage.isMensajeSinFacturasVisible(), 
+	            "El mensaje 'No tenés facturas cargadas' no está visible.");
+
+	    softAssert.assertTrue(accountPage.isMensajeSinDomiciliosVisible(), 
+	            "El mensaje 'No tenés domicilios cargados' no está visible.");
+
+	    softAssert.assertTrue(accountPage.isMensajeSinCuentasVisible(), 
+	            "El mensaje 'No tenés cuentas cargadas' no está visible.");
+
+	    softAssert.assertTrue(accountPage.isMensajeSinReservasVisible(), 
+	            "El mensaje 'Aun no tenés reservas hechas' no está visible.");
+
+	    Reporter.log("Se validaron los mensajes de 'No tenés...', reportando fallas si las hay", true);
+
+	    // Al final del test, verificar todas las aserciones
+	    softAssert.assertAll();
 	}
+
+
 }
