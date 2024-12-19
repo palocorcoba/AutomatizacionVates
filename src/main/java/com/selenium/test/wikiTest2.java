@@ -13,6 +13,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.selenium.driver.DriverFactory;
+import com.selenium.page.WikiHomeBsAsPage;
 import com.selenium.page.WikiHomePage;
 import com.selenium.page.WikiResultPage;
 
@@ -50,7 +51,135 @@ public class wikiTest2 {
 				{"Club AtlÃ©tico Talleres"}
         };
     }
+	
+	@DataProvider(name = "datos3")
+	public Object[][] createData3() {
+	    return new Object[][] {
+	        {"No pude agregar apodo el 'La ciudad del tango' por permisos", "AgustinaA"}
+	    };
+	}
 
+	
+	
+	@Test(dataProvider = "datos3", description = "Validar que las búsquedas en Wikipedia funcionan")
+	public void ValidarWikipediaAA (String textoNuevo, String firma ) throws Exception {
+	    Reporter.log("Inicializamos la página de Buenos Aires", true);
+	 
+        
+	    // Inicializamos la página de Buenos Aires
+	    WikiHomeBsAsPage wikiPage = PageFactory.initElements(driver, WikiHomeBsAsPage.class);
+        driver.get("https://es.wikipedia.org/wiki/Buenos_Aires");
+        
+	    // Verificamos que el menú superior izquierdo este disponibles
+	    Reporter.log("Haciendo clic en el menú superior izquierdo", true);
+	    wikiPage.clickMenuIzquierdo();
+	    
+	    Reporter.log("Haciendo clic en Notificar un error", true);
+	    wikiPage.clickNotificarError();
+
+	    Reporter.log("Haciendo clic en 'Voy Informar El error'", true);
+	    wikiPage.clickVoyAInformarElerror();
+	    
+	    Reporter.log("Escribiendo texto");
+	    wikiPage.escribirMensaje(textoNuevo);
+	    
+	    Reporter.log("Escribiendo mensaje", true);
+	    wikiPage.escribirfirma("firma");
+	    
+	    Reporter.log("Haciendo clic en 'Aceptar'", true);
+	    wikiPage.clickAceptar();
+	    
+	    Reporter.log("Verificando que el título 'Informes de error' esté presente", true);
+	    Assert.assertTrue(wikiPage.isTituloInformeDeErrorPresente(), 
+	            "El título 'Informes de error' no está presente.");
+	     
+	}
+	
+	@Test(dataProvider = "datos3", description = "Validar que las búsquedas en Wikipedia funcionan")
+	public void ValidarWikipediaAA1 (String textoNuevo, String firma ) throws Exception {
+	    Reporter.log("Inicializamos la página de Buenos Aires", true);
+	 
+        
+	    // Inicializamos la página de Buenos Aires
+	    WikiHomeBsAsPage wikiPage = PageFactory.initElements(driver, WikiHomeBsAsPage.class);
+        driver.get("https://es.wikipedia.org/wiki/Buenos_Aires");
+        
+	    // Verificamos que el menú superior izquierdo este disponibles
+	    Reporter.log("Haciendo clic en el menú superior izquierdo", true);
+	    wikiPage.clickMenuIzquierdo();
+	    
+	    Reporter.log("Haciendo clic en Notificar un error", true);
+	    wikiPage.clickNotificarError();
+
+	    Reporter.log("Haciendo clic en 'Voy A Arreglarlo'", true);
+	    wikiPage.clickVoyAArreglarlo();
+	    
+	    Reporter.log("Haciendo clic en Editar");
+	    wikiPage.clickEmpezarAEditar();
+	    
+	    Reporter.log("Escribiendo mensaje", true);
+	   
+	    
+	     
+	}
+	/*
+	    Reporter.log("Haciendo clic en 'Empezar a Editar'", true);
+	    wikiPage.clickEmpezarAEditar();
+	    
+	    Reporter.log("Escribiendo en el área de texto del script", true);
+	    wikiPage.escribirEnScript(textoNuevo);
+
+	    Reporter.log("Escribiendo el resumen", true);
+	    wikiPage.escribirResumen("Agregar apodo");
+
+	    Reporter.log("Guardando los cambios", true);
+	    wikiPage.guardar();
+
+	    // Aquí, puedes validar que la página haya cambiado o si el texto fue guardado correctamente
+	    Assert.assertTrue(driver.getCurrentUrl().contains("wpSave"), "No se guardó la página correctamente");
+
+	    // Para validar los resultados de búsqueda, si es necesario
+	    WikiResultPage resultadoPage = PageFactory.initElements(driver, WikiResultPage.class);
+	    Assert.assertTrue(resultadoPage.getTitulo(textoNuevo).contains(textoNuevo), "No se encontró " + textoNuevo);*/
+
+	
+	
+	/*
+		@Test
+	public void ValidarWikipediaAA() {
+	    try {
+	    	 driver.get("https://es.wikipedia.org/wiki/Buenos_Aires");
+	 	    
+	 	    WikiHomeBsAsPage wikiPage = PageFactory.initElements(driver, WikiHomeBsAsPage.class);
+	        System.out.println("Inicio del test ValidarWikipediaAA...");
+
+	        System.out.println("Localizando la caja de búsqueda...");
+	       
+
+	        System.out.println("Navegando por el menú...");
+	       wikiPage.clickMenuIzquierdo();
+	        wikiPage.clickNotificarError();
+	        wikiPage.clickVoyAArreglarlo();
+	        wikiPage.clickEmpezarAEditar();
+
+	        System.out.println("Escribiendo el texto principal...");
+	        wikiPage.escribirEnScript();
+
+	        System.out.println("Escribiendo el resumen...");
+	        wikiPage.escribirResumen();
+
+	        System.out.println("Guardando los cambios...");
+	        wikiPage.guardar();
+
+	    } catch (Exception e) {
+	        System.out.println("Error durante el test: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	    System.out.println("Fin del test ValidarWikipediaAA.");
+	}
+
+	*/
+	
 	@Test(dataProvider = "datos2", description = "Validar que las busquedas en Wikipedia funcionan")
 	public void ValidarWikipedia2(String dato) throws Exception {
 		Reporter.log("Caso de prueba", true);
