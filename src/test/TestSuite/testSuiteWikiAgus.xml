@@ -9,6 +9,8 @@
       	<methods>
 					<include name="ValidarWikipediaAA" />
 					<include name="ValidarElementosYPagina" />
+					<include name="ValidarWikipediaAA1" />
+					<include name="ValidarWikipediaAA2" />
 					
 				
 		
